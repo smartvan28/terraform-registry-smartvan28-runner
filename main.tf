@@ -13,12 +13,9 @@ data "yandex_vpc_subnet" "test_subnet" {
   name = "test_subnet"
 }
 
-data "yandex_dns_zone" "zone1" {
-  name = "my-public-zone"
-}
-  
-resource "yandex_compute_instance" "test" {
-  name        = "test"
+
+resource "yandex_compute_instance" "runner" {
+  name        = "runner"
   platform_id = "standard-v1"
   zone        = "ru-central1-a"
 
