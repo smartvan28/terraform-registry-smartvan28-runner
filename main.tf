@@ -13,7 +13,14 @@ data "yandex_vpc_subnet" "test_subnet" {
   name = "test_subnet"
 }
 
+data "yandex_compute_instance" "test" {
+  name = "test"
+}
 
+
+data "yandex_compute_instance" "test-monitoring" {
+  name = "test-monitoring"
+}
 
 
 resource "local_file" "inventory" {
