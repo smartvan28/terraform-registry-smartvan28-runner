@@ -30,16 +30,6 @@ resource "yandex_compute_instance" "runner" {
     }
   }
   
-  resource "local_file" "inventory" {
-  filename = "./inventory.txt"
-  content = <<EOF
-  [webserver]
-  web1 ansible_host=${data.yandex_compute_instance.test.network_interface.0.nat_ip_address} ansible_user = ubuntu
-  [monitoring]
-  monitoring1 ansible_host=${data.yandex_compute_instance.test-monitoring.network_interface.0.nat_ip_address} ansible_user = ubuntu
-  EOF
-}
-  
 
   network_interface {
     subnet_id = data.yandex_vpc_subnet.test_subnet.id
@@ -50,6 +40,17 @@ resource "yandex_compute_instance" "runner" {
     foo      = "bar"
     ssh-keys = "ubuntu:${file("./id_rsa.pub")}"
   }
+  
+  resource "local_file" "inventory" {
+   filename = "./inventory.txt"
+   content = <<EOF
+   [webserver]
+   web1 ansible_host=${data.yandex_compute_instance.test.network_interface.0.nat_ip_address} ansible_user = ubuntu
+   [monitoring]
+   monitoring1 ansible_host=${data.yandex_compute_instance.test-monitoring.network_interface.0.nat_ip_address} ansible_user = ubuntu
+   EOF
+}
+  
   
   connection {
     type = "ssh"
