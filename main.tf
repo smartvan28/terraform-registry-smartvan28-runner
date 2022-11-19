@@ -29,6 +29,17 @@ resource "yandex_compute_instance" "runner" {
       image_id = "fd8qps171vp141hl7g9l"
     }
   }
+  
+  resource "local_file" "inventory" {
+  filename = "./inventory.txt"
+  content = <<EOF
+  [webserver]
+  web1 ansible_host=${data.yandex_compute_instance.test.network_interface.0.nat_ip_address} ansible_user = ubuntu
+  [monitoring]
+  monitoring1 ansible_host=${data.yandex_compute_instance.test-monitoring.network_interface.0.nat_ip_address} ansible_user = ubuntu
+  EOF
+}
+  
 
   network_interface {
     subnet_id = data.yandex_vpc_subnet.test_subnet.id
