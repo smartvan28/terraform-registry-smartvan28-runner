@@ -24,12 +24,12 @@ data "yandex_compute_instance" "test-monitoring" {
 
 
 resource "local_file" "inventory" {
-   filename = "./inventory_test"
+   filename = "./inventory_test.ini"
    content = <<EOF
 [webserver]
-web1 ansible_host=${data.yandex_compute_instance.test.network_interface.0.nat_ip_address} ansible_user = ubuntu
+web1 ansible_host=${data.yandex_compute_instance.test.network_interface.0.nat_ip_address} ansible_user=ubuntu
 [monitoring]
-monitoring1 ansible_host=${data.yandex_compute_instance.test-monitoring.network_interface.0.nat_ip_address} ansible_user = ubuntu
+monitoring1 ansible_host=${data.yandex_compute_instance.test-monitoring.network_interface.0.nat_ip_address} ansible_user=ubuntu
    EOF
 }
 
@@ -70,8 +70,8 @@ resource "yandex_compute_instance" "runner" {
   
   
   provisioner "file" {
-  source      = "./inventory_test"
-  destination = "/tmp/inventory_test"
+  source      = "./inventory_test.ini"
+  destination = "/tmp/inventory_test.ini"
     
   }
   
