@@ -33,7 +33,6 @@ resource "local_file" "inventory" {
    EOF
 }
 
-
 resource "yandex_compute_instance" "runner" {
   name        = "runner"
   platform_id = "standard-v1"
@@ -69,6 +68,12 @@ resource "yandex_compute_instance" "runner" {
     host = self.network_interface[0].nat_ip_address
   }
   
+  
+  provisioner "file" {
+  source      = "./inventory.txt"
+  destination = "/tmp/inventory.txt"
+    
+  }
   
   provisioner "file" {
   source      = "script.sh"
