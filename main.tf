@@ -24,7 +24,7 @@ data "yandex_compute_instance" "test-monitoring" {
 
 
 resource "local_file" "inventory" {
-   filename = "./inventory.txt"
+   filename = "./inventory_test"
    content = <<EOF
 [webserver]
 web1 ansible_host=${data.yandex_compute_instance.test.network_interface.0.nat_ip_address} ansible_user = ubuntu
@@ -70,8 +70,8 @@ resource "yandex_compute_instance" "runner" {
   
   
   provisioner "file" {
-  source      = "./inventory.txt"
-  destination = "/tmp/inventory.txt"
+  source      = "./inventory_test"
+  destination = "/tmp/inventory_test"
     
   }
   
