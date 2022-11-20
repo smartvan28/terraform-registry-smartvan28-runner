@@ -27,9 +27,9 @@ resource "local_file" "inventory" {
    filename = "./inventory_test.ini"
    content = <<EOF
 [webserver]
-ansible_host=${data.yandex_compute_instance.test.network_interface.0.nat_ip_address} ansible_user=ubuntu
+${data.yandex_compute_instance.test.network_interface.0.nat_ip_address} ansible_user=ubuntu
 [monitoring]
-ansible_host=${data.yandex_compute_instance.test-monitoring.network_interface.0.nat_ip_address} ansible_user=ubuntu
+${data.yandex_compute_instance.test-monitoring.network_interface.0.nat_ip_address} ansible_user=ubuntu
    EOF
 }
 
